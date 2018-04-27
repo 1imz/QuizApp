@@ -119,10 +119,16 @@ function loadearthquakelayer(earthquakedata) {
     mymap.fitBounds(earthquakelayer.getBounds());
 }
 
-function getLocation() {
-navigator.geolocation.getCurrentPosition(getPosition);
+function trackLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+    } else {
+		alert("geolocation is not supported by this browser");
+    }
 }
-function getPosition(position) {
-L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
-
+function showPosition(position) {
+	// draw a point on the map
+	L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
+		.bindPopup("<b>You were at "+ position.coords.longitude + " "+position.coords.latitude+"!</b>");
+	mymap.setView([position.coords.latitude, position.coords.longitude], 13);
 }
