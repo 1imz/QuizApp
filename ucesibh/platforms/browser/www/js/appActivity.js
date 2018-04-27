@@ -26,20 +26,13 @@ var testMarkerPink = L.AwesomeMarkers.icon({
 // ***********************************
 // the functions
 
-function trackLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition);
-    } else {
-		alert("geolocation is not supported by this browser");
-    }
+function getLocation() {
+navigator.geolocation.getCurrentPosition(getPosition);
 }
-function showPosition(position) {
-	// draw a point on the map
-	L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
-		.bindPopup("<b>You were at "+ position.coords.longitude + " "+position.coords.latitude+"!</b>");
-	mymap.setView([position.coords.latitude, position.coords.longitude], 13);
-}
+function getPosition(position) {
+L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
 
+}
 
 function loadMap(){
 		mymap = L.map('mapid').setView([51.505, -0.09], 13);
@@ -124,4 +117,12 @@ function loadearthquakelayer(earthquakedata) {
             },
         }).addTo(mymap); 
     mymap.fitBounds(earthquakelayer.getBounds());
+}
+
+function getLocation() {
+navigator.geolocation.getCurrentPosition(getPosition);
+}
+function getPosition(position) {
+L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
+
 }
