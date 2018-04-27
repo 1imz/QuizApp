@@ -1,3 +1,20 @@
+function trackLocation() {
+ if (navigator.geolocation) {
+ navigator.geolocation.watchPosition(showPosition);
+ } else {
+     alert("Geolocation is not supported by this browser.");
+ }
+}
+
+function showPosition(position) {
+    #draw point on the Map
+    L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
+        .bindPopup("<b> You were at "+ position.coords.longitude + " "+position.coords.latitude+!</b>");
+    mymap.setview([position.coords.latitude, position.coords.longitude], 13);
+}
+
+
+
 function loadEarthquakeData() {
 	// call the getEarthquakes code
 	// keep the alert message so that we know something is happening
