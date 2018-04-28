@@ -26,19 +26,22 @@ var testMarkerPink = L.AwesomeMarkers.icon({
 // ***********************************
 // the functions
 
-function getLocation() {
-navigator.geolocation.getCurrentPosition(getPosition);
+function trackLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+    } else {
+		alert("geolocation is not supported by this browser");
+    }
 }
-function getPosition(position) {
-L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
+function showPosition(position) {
+	// draw a point on the map
+	L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap).bindPopup("<b>You were at "+ position.coords.longitude + " "+position.coords.latitude+"!</b>");mymap.setView([position.coords.latitude, position.coords.longitude], 13);
+	}
 
-}
 
 function loadMap(){
 		mymap = L.map('mapid').setView([51.505, -0.09], 13);
-
-
-			// load the tiles
+		// load the tiles
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -50,10 +53,9 @@ function loadMap(){
 }
 
 
-		function showPointLineCircle(){
-				// add a point
-	L.marker([51.5, -0.09]).addTo(mymap)
-		.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+function showPointLineCircle(){
+	// add a point
+	L.marker([51.5, -0.09]).addTo(mymap).bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
 	// add a circle
 	L.circle([51.508, -0.11], 500, {
 		color: 'red',
@@ -70,8 +72,7 @@ function loadMap(){
 		fillColor: '#f03',
 		fillOpacity: 0.5
 	}).addTo(mymap).bindPopup("I am a polygon.");
-
-		}
+}
 		
 		
 // call the server
@@ -117,18 +118,4 @@ function loadearthquakelayer(earthquakedata) {
             },
         }).addTo(mymap); 
     mymap.fitBounds(earthquakelayer.getBounds());
-}
-
-function trackLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition);
-    } else {
-		alert("geolocation is not supported by this browser");
-    }
-}
-function showPosition(position) {
-	// draw a point on the map
-	L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
-		.bindPopup("<b>You were at "+ position.coords.longitude + " "+position.coords.latitude+"!</b>");
-	mymap.setView([position.coords.latitude, position.coords.longitude], 13);
 }
