@@ -19,11 +19,11 @@ var testMarkerPink = L.AwesomeMarkers.icon({
 // this is the code that runs when the App starts
 
 	loadMap();
-	//showPointLineCircle();
+	
 	
 		
 		
-// ***********************************
+// *************
 // the functions
 
 function trackLocation() {
@@ -50,28 +50,6 @@ function loadMap(){
 			id: 'mapbox.streets'
 		}).addTo(mymap);
 
-}
-
-
-function showPointLineCircle(){
-	// add a point
-	L.marker([51.5, -0.09]).addTo(mymap).bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
-	// add a circle
-	L.circle([51.508, -0.11], 500, {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5
-	}).addTo(mymap).bindPopup("I am a circle.");
-	// add a polygon with 3 end points (i.e. a triangle)
-	var myPolygon = L.polygon([
-		[51.509, -0.08],
-		[51.503, -0.06],
-		[51.51, -0.047]
-	],{
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5
-	}).addTo(mymap).bindPopup("I am a polygon.");
 }
 		
 		
@@ -118,4 +96,30 @@ function loadearthquakelayer(earthquakedata) {
             },
         }).addTo(mymap); 
     mymap.fitBounds(earthquakelayer.getBounds());
+}
+
+//*********
+// functions to change the DIV content using AJAX - week 5
+
+function callDivChange() {
+	alert("Changing");
+	xhr = new XMLHttpRequest();
+	xhr.open("GET", filename , true);
+	xhr.onreadystatechange = processDivChange;
+	try {
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	}
+	catch (e) {
+		// this only works in internet explorer
+	}
+	xhr.send();
+}
+function processDivChange() {
+	if (xhr.readyState < 4) // while waiting response from server
+	document.getElementById('ajaxtest').innerHTML = "Loading...";
+	else if (xhr.readyState === 4) { // 4 = Response from server has been completely loaded.
+	if (xhr.status == 200 && xhr.status < 300)
+		// http status between 200 to 299 are all successful
+	document.getElementById('ajaxtest').innerHTML = xhr.responseText;
+	}
 }

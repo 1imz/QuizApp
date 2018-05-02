@@ -100,7 +100,7 @@ function loadearthquakelayer(earthquakedata) {
 
 //*********
 // functions to change the DIV content using AJAX - week 5
-
+var xhr;
 function callDivChange() {
 	alert("Changing");
 	xhr = new XMLHttpRequest();
