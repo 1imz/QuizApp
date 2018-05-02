@@ -104,6 +104,7 @@ var xhr;
 function callDivChange() {
 	alert("Changing");
 	xhr = new XMLHttpRequest();
+    var filename = document.getElementById("filename").value;
 	xhr.open("GET", filename , true);
 	xhr.onreadystatechange = processDivChange;
 	try {
