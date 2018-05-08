@@ -1,10 +1,6 @@
 //* Code used/adapted from https://github.com/claireellul/cegeg077-week5app/blob/master/ucfscde/www/js/appActivity.js
 
 // the variables
-
-
-
-
 var getgeoJSONlayer;
 // a global variable to hold the http request
 var client;
@@ -116,7 +112,7 @@ function loadquestionData(ResData) {
             // use point to layer to create the question points needed
             pointToLayer: function (feature, latlng){
                     PNTMark = L.marker(latlng)
-                    PNTMark.bindPopup("<b>"+feature.properties.locationname +"</b>");
+                    PNTMark.bindPopup("<b>"+feature.properties.location_name +"</b>");
                 questionMarker.push(PNTMark);
                 return PNTMark;   
             },
@@ -255,7 +251,7 @@ var TrueAnswer;
 function AnswerUpload() {
 	alert ("Submitting...");
 	// correct answer
-	var cAnswer = Clicked.feature.properties.correct_answer;
+	var cAnswer = ClickedMarker.feature.properties.correct_answer;
 	// Assign question
 	var question = document.getElementById("question").value;
 	// Assign users answer
