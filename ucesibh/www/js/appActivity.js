@@ -24,6 +24,7 @@ var testMarkerOrange = L.AwesomeMarkers.icon({
 var testMarkerBlue = L.AwesomeMarkers.icon({
 	icon: 'play',
 	markerColor: 'blue'
+});
 
 var testMarkerPink = L.AwesomeMarkers.icon({
 	icon: 'play',
@@ -31,6 +32,10 @@ var testMarkerPink = L.AwesomeMarkers.icon({
 });
 
 var popup = L.popup();
+
+loadMap();
+trackLocation();
+getgeoJSONlayer();
 
 //loads leaflet map
 function loadMap(){
@@ -43,14 +48,12 @@ function loadMap(){
 				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 			id: 'mapbox.streets'
 		}).addTo(mymap);
-
+}
 
 
 
 // this is the code that runs when the App starts
-    loadMap();
-    trackLocation();
-    getgeoJSONlayer();
+ 
 	
 
 //FUNCTIONS FOR QUIZ APP ===========
@@ -114,7 +117,7 @@ function loadquestionData(ResData) {
             pointToLayer: function (feature, latlng){
                 PNTMarker = L.marker(latlng)
                 PNTMarker.bindPopup("<b>"+feature.properties.locationname +"</b>");
-            questionMarker.push(PNTMarker);
+                questionMarker.push(PNTMarker);
                 return PNTMarker;
 
               
@@ -243,7 +246,7 @@ function submitUserAnswer() {
         }
         else 
         {        
-        	uploadAnswer()
+        	AnswerUpload()
         }
 }
 
@@ -251,7 +254,7 @@ function submitUserAnswer() {
 var TrueAnswer;
 
 // Submit answer to the database 
-function uploadAnswer() {
+function AnswerUpload() {
 	alert ("Submitting...");
 	// correct answer
 	var cAnswer = Clicked.feature.properties.correct_answer;
