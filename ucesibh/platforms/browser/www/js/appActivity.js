@@ -2,6 +2,36 @@
 
 // the variables
 
+
+
+
+var getgeoJSONlayer;
+// a global variable to hold the http request
+var client;
+// store the map
+var mymap;
+
+var testMarkerRed = L.AwesomeMarkers.icon({
+	icon: 'play',
+	markerColor: 'red'
+});
+
+var testMarkerOrange = L.AwesomeMarkers.icon({
+	icon: 'play',
+	markerColor: 'orange'
+	});
+
+var testMarkerBlue = L.AwesomeMarkers.icon({
+	icon: 'play',
+	markerColor: 'blue'
+
+var testMarkerPink = L.AwesomeMarkers.icon({
+	icon: 'play',
+	markerColor: 'pink'
+});
+
+var popup = L.popup();
+
 //loads leaflet map
 function loadMap(){
 		mymap = L.map('mapid').setView([51.505, -0.09], 13);
@@ -14,36 +44,8 @@ function loadMap(){
 			id: 'mapbox.streets'
 		}).addTo(mymap);
 
-}
 
 
-var getgeoJSONlayer;
-// a global variable to hold the http request
-var client;
-// store the map
-var mymap;
-
-var testMarkerOrange = L.AwesomeMarkers.icon({
-	icon: 'play',
-	markerColor: 'orange'
-	}); 
-
-var testMarkerBlue = L.AwesomeMarkers.icon({
-	icon: 'play',
-	markerColor: 'blue'
-
-
-var testMarkerRed = L.AwesomeMarkers.icon({
-	icon: 'play',
-	markerColor: 'red'
-});
-
-var testMarkerPink = L.AwesomeMarkers.icon({
-	icon: 'play',
-	markerColor: 'pink'
-});
-
-var popup = L.popup();
 
 // this is the code that runs when the App starts
     loadMap();
@@ -70,7 +72,7 @@ function showPosition(position) {
 	L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap).bindPopup("<b>Current location </b>").addTo(mymap);
     //circle with 15m radius around user location - to visually show which question points are closer
     UserRadius = L.circle([position.coords.latitude, position.coords.longitude], radius).addTo(mymap);
-	}
+}
 
 
 //to store point markers with questions
