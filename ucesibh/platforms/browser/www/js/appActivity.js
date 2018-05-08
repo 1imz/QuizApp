@@ -70,9 +70,9 @@ function trackLocation() {
 
 // Show users location on map with point
 function showPosition(position) {
-    var radius = 15
+    var radius = 25
 	
-	L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap).bindPopup("<b>Current location </b>").addTo(mymap);
+    user = L.marker([position.coords.latitude, position.coords.longitude]).bindPopup("<b>Current location </b>").addTo(mymap);
     //circle with 15m radius around user location - to visually show which question points are closer
     UserRadius = L.circle([position.coords.latitude, position.coords.longitude], radius).addTo(mymap);
 }
@@ -115,12 +115,10 @@ function loadquestionData(ResData) {
         {
             // use point to layer to create the question points needed
             pointToLayer: function (feature, latlng){
-                PNTMarker = L.marker(latlng)
-                PNTMarker.bindPopup("<b>"+feature.properties.locationname +"</b>");
-                questionMarker.push(PNTMarker);
-                return PNTMarker;
-
-              
+                    PNTMark = L.marker(latlng)
+                    PNTMark.bindPopup("<b>"+feature.properties.locationname +"</b>");
+                questionMarker.push(PNTMark);
+                return PNTMark;   
             },
         }).addTo(mymap); 
     mymap.fitBounds(questionData.getBounds());
@@ -184,16 +182,16 @@ function calculateDistance(lat1, lon1, lat2, lon2, unit) {
 //=====================================
 
 function closeDistanceQuestions(){
-	checkQuestionDistance(QMarker);
+	checkQuestionDistance(questionMarker);
 }
 // Determine the users distance from each question marker 
 function checkQuestionDistance(QMarker){
 	// Get users current location
 	latlng = user.getLatLng();
-	alert("Checking if you are within 15m of a question"); 
+	alert("Checking if you are within 25m of a question"); 
 	//Loop question location to track if within 25m from user
 	for(var i=0; i<QMarker.length; i++) {
-	    currentMarker = QMarkerMarker[i];
+	    currentMarker = QMarker[i];
 	    currentMarker_latlng = currentMarker.getLatLng();
 		// Push to distance
 	    var distance = getDistanceMiles(currentMarker_latlng.lat, currentMarker_latlng.lng, latlng.lat, latlng.lng);
@@ -214,7 +212,7 @@ function onClick(e) {
 	ClickedMarker = this;
 }
 
-function QuestionClicked (clickedQuestion) {
+function QuestionClicked(clickedQuestion) {
 	// Replace leaflet map div with questions div
 	document.getElementById('questions').style.display = 'block';
 	document.getElementById('mapid').style.display = 'none';
