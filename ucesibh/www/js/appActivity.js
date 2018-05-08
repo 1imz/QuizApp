@@ -108,7 +108,7 @@ function loadquestionData(ResData) {
             // use point to layer to create the question points needed
             pointToLayer: function (feature, latlng){
                 PNTMarker = L.marker(latlng)
-                PNTMarker.bindPopup("<b>"+feature.properties.locationName +"</b>");
+                PNTMarker.bindPopup("<b>"+feature.properties.locationname +"</b>");
             questionMarker.push(PNTMarker);
                 return PNTMarker;
 
