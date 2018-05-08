@@ -111,32 +111,38 @@
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
           <a class="mdl-navigation__link" href="" onclick='trackLocation();return false;'><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">Info</i>Track Location</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Trash</a>
-          <a class="mdl-navigation__link" href="" onclick='getEarthquakes();return false;'><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Get POI</a>
-            <a class="mdl-navigation__link" href="" onclick='callDivChange();return false;'><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Change Div Content</a>
-		  
-		  
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Forums</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Updates</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Promos</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">shopping_cart</i>Purchases</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
-          <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
+          <a class="mdl-navigation__link" href="" onclick='getDistance();return false'><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Distance to Warren Street</a>
+          <a class="mdl-navigation__link" href="" onclick='getgeoJSON();return false;'><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Get Question points</a>
+            <a class="mdl-navigation__link" href="" onclick='closeDistanceQuestions();return false;'><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Answer question</a>
         </nav>
       </div>
-      <main class="mdl-layout__content mdl-color--grey-100">
-		<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" > 
-		<div id="mapid" style="width: 1600px; height: 400px;"></div>
-		</div>
-		<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" > 
-        <div id="ajaxtest" style="width: 1600px; height: 200px;">
-		<p> Enter File Name For Change & Press Change Div Button </p>
-		<input type='text' size='50' id='filename'>
-		</div>
+     <main class="mdl-layout__content mdl-color--grey-100">
+	 <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid"> 
+		<div id="mapid" style="width: 100%; height: 100%;"></div> 
+
+
+    <div id="questionDiv" style ="display:none">
+        <h2 id = "questionHead"> Please answer the question shown:</h2>
+		
+		<textarea readonly id = "question" style="border: none; width:100%" ></textarea>
+
+        <textarea readonly id = "answer1"></textarea>
+        <input type="radio" name="answer" id = radioCheck1 value="1" checked="yes" /><br />
+
+        <textarea readonly id = "answer2"></textarea>
+        <input type="radio" name="answer" id = radioCheck2 value="2"/><br />
+
+        <textarea readonly id = "answer3"></textarea>
+        <input type="radio" name="answer" id = radioCheck3 value="3"/><br />
+
+        <textarea readonly id = "answer4"></textarea>
+        <input type="radio" name="answer" id = radioCheck4 value="4"/><br />
+
+        <button id="submitButton" onclick ="submitUserAnswer()">Submit Answer</button></div>
 		</div>
       </main>
 	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 	<script src="./js/appActivity.js"></script>
+    <script src="./js/uploadData.js"> </script>
 	</body>
 </html>
