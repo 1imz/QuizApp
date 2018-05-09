@@ -191,7 +191,7 @@ function checkQuestionDistance(QMarker){
 	    currentMarker_latlng = currentMarker.getLatLng();
 		// Push to distance
 	    var distance = getDistanceMiles(currentMarker_latlng.lat, currentMarker_latlng.lng, latlng.lat, latlng.lng);
-	    if (distance <= 25) {
+	    if (distance <= 50) {
 			QMarker[i].on('click', onClick);
         } else {
 			QMarker[i].bindPopup("Get closer to the question to answer!");
