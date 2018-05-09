@@ -1,9 +1,11 @@
 //* Code used/adapted from https://github.com/claireellul/cegeg077-week5app/blob/master/ucfscde/www/js/appActivity.js
 
-// the variables
+// global variables
 var getgeoJSONlayer;
+
 // a global variable to hold the http request
 var client;
+
 // store the map
 var mymap;
 
@@ -29,6 +31,8 @@ var testMarkerPink = L.AwesomeMarkers.icon({
 
 var popup = L.popup();
 
+// this is the code that runs when the App starts
+
 loadMap();
 trackLocation();
 getgeoJSONlayer();
@@ -48,10 +52,6 @@ function loadMap(){
 
 
 
-// this is the code that runs when the App starts
- 
-	
-
 //FUNCTIONS FOR QUIZ APP ===========
 
 
@@ -64,7 +64,7 @@ function trackLocation() {
     }
 }
 
-// Show users location on map with point
+// Show users location on map with point and a raidus of 50m
 function showPosition(position) {
     var radius = 50
 	
@@ -81,7 +81,7 @@ questionMarker = [];
 var questionData;
 		
 		
-// call the server
+//Gets the question data from the database using XMLHttprequest
 function getgeoJSONlayer() {
    // set up the request
    client = new XMLHttpRequest();
@@ -92,7 +92,7 @@ function getgeoJSONlayer() {
    // activate the request
    client.send();
 }
-// receive the response
+// receives response from server & processes it
 function DataResponse() {
   // wait for a response - if readyState is not 4 then keep waiting 
   if (client.readyState == 4) {
@@ -102,6 +102,7 @@ function DataResponse() {
     loadquestionData(ResData);
   }
 }
+//Convert recieved data to JSON and show on leaflet map
 function loadquestionData(ResData) {
       // convert the text received from the server to JSON 
       var dataJSON = JSON.parse(ResData);
@@ -142,7 +143,7 @@ function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
 
-//============ DISTANCE CALCULATION BETWEEN USER & WARREN STREET STATION =============/
+//Calculates distance between user and warren street station
 function getDistance() {
 	// getDistanceFromPoint is the function called once the distance has been found
 	navigator.geolocation.getCurrentPosition(getDistanceFromPoint);
@@ -180,11 +181,11 @@ function calculateDistance(lat1, lon1, lat2, lon2, unit) {
 function closeDistanceQuestions(){
 	checkQuestionDistance(questionMarker);
 }
-// Determine the users distance from each question marker 
+// Checks users distance from each question marker - gives alert if out of radius
 function checkQuestionDistance(QMarker){
 	// Get users current location
 	latlng = user.getLatLng();
-	alert("Checking if you are within 25m of a question"); 
+	alert("Checking if you are within 50m of a question"); 
 	//Loop question location to track if within 25m from user
 	for(var i=0; i<QMarker.length; i++) {
 	    currentMarker = QMarker[i];
@@ -202,12 +203,12 @@ function checkQuestionDistance(QMarker){
 //variable for the clicked marker
 var ClickedMarker;
 
-// Click function initiates QuestionClicked (question form div shown after you click on the leaflet map) 
+// Click function initiates QuestionClicked (question form div shown after you click on the question marker in leaflet map) 
 function onClick(e) {
 	QuestionClicked(this);
 	ClickedMarker = this;
 }
-
+//Question form shown after the relevant question mark is clicked
 function QuestionClicked(clickedQuestion) {
 	// Replace leaflet map div with questions div
 	document.getElementById('questions').style.display = 'block';
@@ -227,7 +228,7 @@ function QuestionClicked(clickedQuestion) {
 	ClickedMarker = clickedQuestion;
 }
 
-// Answer selection requirement
+// Answer selection 
 function submitUserAnswer() {
         var c1=document.getElementById("radioCheck1").checked;
         var c2=document.getElementById("radioCheck2").checked;
@@ -244,10 +245,10 @@ function submitUserAnswer() {
         }
 }
 
-// Variable to tell user answer is correct or not.
+// Variable to tell user if answer is correct/incorrect.
 var TrueAnswer;
 
-// Submit answer to the database 
+// Submit answer to the database & tells user whether correct/incorrect answer chosen
 function AnswerUpload() {
 	alert ("Submitting...");
 	// correct answer
@@ -275,7 +276,7 @@ function AnswerUpload() {
 		answer =4;
 		postString=postString+"&answer="+answer;
 	}
-	//Tell user if correct or not.
+//Tells user if correct/incorrect
 	if (answer == cAnswer) {
 		alert("Correct!");
 		TrueAnswer = true;
@@ -287,7 +288,7 @@ function AnswerUpload() {
 	processAnswer(postString);
 }
 
-// Uploads answer data in postString variable to the database using XMLHttpRequest(
+// Uploads answer data in postString to the database using XMLHttpRequest(
 function processAnswer(postString) {
    client = new XMLHttpRequest();
    client.open('POST','http://developer.cege.ucl.ac.uk:30264/AnswerUpload',true);
