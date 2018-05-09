@@ -66,10 +66,10 @@ function trackLocation() {
 
 // Show users location on map with point
 function showPosition(position) {
-    var radius = 25
+    var radius = 50
 	
     user = L.marker([position.coords.latitude, position.coords.longitude]).bindPopup("<b>Current location </b>").addTo(mymap);
-    //circle with 15m radius around user location - to visually show which question points are closer
+    //circle with 50m radius around user location - to visually show which question points are closer
     UserRadius = L.circle([position.coords.latitude, position.coords.longitude], radius).addTo(mymap);
 }
 
