@@ -121,10 +121,9 @@ function loadquestionData(ResData) {
     mymap.fitBounds(questionData.getBounds());
 }
 
-//=========== DISTANCE CALCULATION BETWEEN USER & QUESTION POINTS ===============/
-//Calculation found at:
-//https://www.geodatasource.com/developers/javascript
-function getDistanceM(lat1,lon1,lat2,lon2) {
+//Calculation of distance between user and question point - 
+//adapted from https://www.geodatasource.com/developers/javascript
+function getDistanceMiles(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
   var dLon = deg2rad(lon2-lon1); 
@@ -134,7 +133,7 @@ function getDistanceM(lat1,lon1,lat2,lon2) {
     Math.sin(dLon/2) * Math.sin(dLon/2)
     ; 
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  var d = R * c; // Conversion to (km)(Kilometers)
+  var d = R * c; // Conversion to Kilometers
   var d2 = d * 1000;
   return d2;
 }
@@ -144,7 +143,7 @@ function deg2rad(deg) {
 }
 
 //Calculates distance between user and warren street station
-function getDist() {
+function getDistance() {
 	// getDistanceFromPoint is the function called once the distance has been found
 	navigator.geolocation.getCurrentPosition(getDistanceFromPoint);
 }
@@ -155,12 +154,12 @@ function getDistanceFromPoint(position) {
 	var lat = 51.524616;
 	var lng = -0.13818;
 	// return the distance in kilometers
-	var distance = calculateDist(position.coords.latitude, position.coords.longitude, lat,lng, 'K');
+	var distance = calculateDistance(position.coords.latitude, position.coords.longitude, lat,lng, 'K');
 	document.getElementById('showDistance').innerHTML = "Distance: " + distance;
 }
 
 // code adapted from https://www.htmlgoodies.com/beyond/javascript/calculate-the-distance-between-two-points-inyour-web-apps.html
-function calculateDist(lat1, lon1, lat2, lon2, unit) {
+function calculateDistance(lat1, lon1, lat2, lon2, unit) {
 	var radlat1 = Math.PI * lat1/180;
 	var radlat2 = Math.PI * lat2/180;
 	var radlon1 = Math.PI * lon1/180;
@@ -178,11 +177,11 @@ function calculateDist(lat1, lon1, lat2, lon2, unit) {
 }
 
 
-function closeDistQuest(){
-	checkQDistance(questionMarker);
+function closeDistanceQuestions(){
+	checkQuestionDistance(questionMarker);
 }
 // Checks users distance from each question marker - gives alert if out of radius
-function checkQDistance(QMarker){
+function checkQuestionDistance(QMarker){
 	// Get users current location
 	latlng = user.getLatLng();
 	alert("Checking if you are within 50m of a question"); 
@@ -191,7 +190,7 @@ function checkQDistance(QMarker){
 	    currentMarker = QMarker[i];
 	    currentMarker_latlng = currentMarker.getLatLng();
 		// Push to distance
-	    var distance = getDistanceM(currentMarker_latlng.lat, currentMarker_latlng.lng, latlng.lat, latlng.lng);
+	    var distance = getDistanceMiles(currentMarker_latlng.lat, currentMarker_latlng.lng, latlng.lat, latlng.lng);
 	    if (distance <= 25) {
 			QMarker[i].on('click', onClick);
         } else {

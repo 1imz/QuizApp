@@ -121,9 +121,8 @@ function loadquestionData(ResData) {
     mymap.fitBounds(questionData.getBounds());
 }
 
-//=========== DISTANCE CALCULATION BETWEEN USER & QUESTION POINTS ===============/
-//Distance Calculation sourced from:
-//https://www.geodatasource.com/developers/javascript
+//Calculation of distance between user and question point - 
+//adapted from https://www.geodatasource.com/developers/javascript
 function getDistanceMiles(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
@@ -176,7 +175,7 @@ function calculateDistance(lat1, lon1, lat2, lon2, unit) {
 	if (unit=="N") { dist = dist * 0.8684 ;} // convert miles to nautical miles
 	return dist;
 }
-//=====================================
+
 
 function closeDistanceQuestions(){
 	checkQuestionDistance(questionMarker);
